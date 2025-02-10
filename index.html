@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>臺灣台語朗讀文章</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1 class="fade-in">臺灣台語朗讀文章</h1>
+        </header>
+        
+        <main>
+            <div id="homePage" class="content-section fade-in">
+                <h2 class="fade-in">109年~113年全國語文競賽臺灣台語朗讀文章彙整</h2>
+                <h3 class="fade-in">請依序選擇年份、組別，以利查看</h3>
+                <button class="start-button" onclick="showYearList()">
+                    
+                    <span class="button-text">開始瀏覽</span>
+                    <span class="button-icon">→</span>
+                </button>
+            </div>
+
+            <div id="yearList" class="content-section fade-in hidden">
+                <!-- 年份列表將由 JavaScript 動態生成 -->
+            </div>
+            
+            <div id="groupList" class="content-section fade-in hidden">
+                <!-- 組別列表將由 JavaScript 動態生成 -->
+            </div>
+            
+            <div id="pdfList" class="content-section fade-in hidden">
+                <!-- PDF 列表將由 JavaScript 動態生成 -->
+            </div>
+        </main>
+        
+        <nav id="breadcrumb" class="fade-in">
+            <!-- 麵包屑導航將由 JavaScript 動態生成 -->
+        </nav>
+    </div>
+    <script src="js/main.js"></script>
+</body>
+</html> 

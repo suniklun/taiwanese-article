@@ -1,173 +1,486 @@
-// 修改資料結構，使用 URL 而不是本地檔案路徑
-const data = {
-    years: ['113', '112', '111', '110', '109'].sort((a, b) => b - a),  // 確保年份由大到小排序
-    groups: ['高中組', '國中組', '國小組'],  // 固定組別順序
-    specialGroups: {  // 新增特殊年份的額外組別
-        '109': ['教師組', '社會組', '高中組', '國中組', '國小組']
-    },
-    pdfs: {
-        '113': {
-            '高中組': 'https://drive.google.com/file/d/1GS5O-fIe9IiPdHbZOJWlAuQbsq45loIF/view?usp=drive_link',
-            '國中組': 'https://drive.google.com/file/d/1WgnZAN8RP3l0h1pMNU9aM-QSvSPxVv-9/view?usp=drive_link',
-            '國小組': 'https://drive.google.com/file/d/1AIIsHSPNHPXm09QkDnmnVsOuiKvZAvQw/view?usp=drive_link'
-        },
-        '112': {
-            '高中組': 'https://drive.google.com/file/d/1aqYU1AGKmoATnlb9pndxpe45QQDE8NCf/view?usp=drive_link',
-            '國中組': 'https://drive.google.com/file/d/1ZD6IJ7hDFPlLFnWHSfw2jc6Q-KWjv7JG/view?usp=drive_link',
-            '國小組': 'https://drive.google.com/file/d/1YB1WfdqHdh3BJaYhp6zyK4Zf5VCHgez8/view?usp=drive_link'
-        },
-        '111': {
-            '高中組': 'https://drive.google.com/file/d/1CnZbgoz42CPLDgYteK-0TG_ZmRv27vpp/view?usp=drive_link',
-            '國中組': 'https://drive.google.com/file/d/1yL_ydKLo8o5mPdR622Rtxdzlmbbn82rj/view?usp=drive_link',
-            '國小組': 'https://drive.google.com/file/d/1Mv13U6SuWN7DregY76yYaf9Odu-cBdOs/view?usp=drive_link'
-        },
-        '110': {
-            '高中組': 'https://drive.google.com/file/d/1vIQgcCXWsMOOTOZICY078fXhqAar292A/view?usp=drive_link',
-            '國中組': 'https://drive.google.com/file/d/12iwHcK0qnoOKj-HjcgIlOo9pMIMZtjyZ/view?usp=drive_link',
-            '國小組': 'https://drive.google.com/file/d/1fevEmd7HH9mwNLn_9UQPKwcbHzjLjeX3/view?usp=drive_link'
-        },
-        '109': {
-            '教師組': 'https://drive.google.com/file/d/183jpU0DzTXdo89rQiaWHqSQkEopMgSNP/view?usp=drive_link',
-            '社會組': 'https://drive.google.com/file/d/1N2YgbYmfUKra6Q1pdKfaqmT5wA53aZrk/view?usp=drive_link',
-            '高中組': 'https://drive.google.com/file/d/19lEVfw5sE21wQC4sCerjQDTYEI3mBLl5/view?usp=drive_link',
-            '國中組': 'https://drive.google.com/file/d/1d9bz-2FQEoa0XWK9-HnRnCF6QR6pXZ-8/view?usp=drive_link',
-            '國小組': 'https://drive.google.com/file/d/1EBJ6lHlicR9Kmd993Z4WeQOxpNls6NBH/view?usp=drive_link'
-        }
+:root {
+    --primary-color: #1a1a1a;
+    --secondary-color: #4a4a4a;
+    --accent-color: #808080;
+    --silver-light: #f0f0f0;
+    --silver: #c0c0c0;
+    --silver-dark: #a0a0a0;
+    --white: #ffffff;
+    --gradient-start: #ffffff;
+    --gradient-end: #d8d8d8;
+    --shadow-color: rgba(0, 0, 0, 0.15);
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: "微軟正黑體", sans-serif;
+    background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end), var(--silver));
+    min-height: 100vh;
+    color: var(--primary-color);
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    text-align: center;
+}
+
+main {
+    flex: 1;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+}
+
+h1 {
+    font-size: 3.5rem;
+    text-align: center;
+    width: 100%;
+    color: var(--primary-color);
+    text-shadow: 
+        3px 3px 6px rgba(0,0,0,0.3),
+        -1px -1px 0 var(--white),
+        2px 2px 0 var(--silver-dark),
+        4px 4px 0 rgba(0,0,0,0.1);
+    letter-spacing: 3px;
+    animation: titleFloat 3s ease-in-out infinite;
+    margin-bottom: 2.5rem;
+    padding: 1rem;
+    background: linear-gradient(45deg, #1a1a1a, #4a4a4a);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    position: relative;
+    font-weight: 900;
+}
+
+h2 {
+    color: var(--secondary-color);
+    font-size: 2rem;
+    margin-bottom: 2rem;
+    text-shadow: 1px 1px 2px var(--shadow-color);
+    position: relative;
+    animation: slideInFromTop 0.8s ease;
+}
+
+.content-section {
+    width: 80%;
+    max-width: 600px;
+    margin: 0 auto;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(145deg, var(--white), var(--silver-light));
+    border-radius: 20px;
+    padding: 3rem 2rem;
+    box-shadow: 
+        0 10px 20px var(--shadow-color),
+        0 4px 8px var(--shadow-color),
+        inset 0 0 100px rgba(255,255,255,0.5);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 1px solid rgba(255,255,255,0.6);
+    backdrop-filter: blur(10px);
+    position: relative;
+}
+
+.content-section:hover {
+    transform: translateY(-5px);
+    box-shadow: 
+        0 15px 30px var(--shadow-color),
+        0 8px 16px var(--shadow-color),
+        inset 0 0 100px rgba(255,255,255,0.7);
+}
+
+.item {
+    width: 100%;
+    max-width: 300px;
+    height: auto;
+    min-height: 80px;
+    padding: 1.5rem;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background: linear-gradient(145deg, var(--white), var(--silver-light));
+    border-radius: 15px;
+    cursor: pointer;
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 1px solid rgba(255,255,255,0.8);
+    box-shadow: 
+        0 4px 8px var(--shadow-color),
+        inset 0 0 20px rgba(255,255,255,0.5);
+    position: relative;
+    overflow: hidden;
+}
+
+.item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        120deg,
+        transparent,
+        rgba(255,255,255,0.3),
+        transparent
+    );
+    transition: 0.5s;
+}
+
+.item:hover::before {
+    left: 50%;
+}
+
+.item:hover {
+    transform: translateY(-8px) scale(1.03);
+    background: linear-gradient(145deg, var(--white), var(--silver));
+    box-shadow: 
+        0 12px 24px var(--shadow-color),
+        inset 0 0 30px rgba(255,255,255,0.8);
+}
+
+.pdf-icon, .pdf-title {
+    width: 100%;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.pdf-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    color: var(--primary-color);
+    transition: all 0.3s ease;
+    animation: iconPulse 2s infinite;
+}
+
+.pdf-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--secondary-color);
+    transition: all 0.3s ease;
+    text-shadow: 1px 1px 1px rgba(255,255,255,0.8);
+}
+
+.item:hover .pdf-icon,
+.item:hover .pdf-title {
+    color: var(--primary-color);
+}
+
+.back-button {
+    margin: 0 auto 2rem auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(145deg, var(--white), var(--silver-light));
+    border: none;
+    padding: 1rem 2rem;
+    border-radius: 12px;
+    cursor: pointer;
+    font-size: 1.1rem;
+    color: var(--secondary-color);
+    transition: all 0.3s ease;
+    box-shadow: 
+        0 4px 8px var(--shadow-color),
+        inset 0 0 20px rgba(255,255,255,0.5);
+    border: 1px solid rgba(255,255,255,0.6);
+}
+
+.back-button:hover {
+    transform: translateY(-3px);
+    background: linear-gradient(145deg, var(--silver-light), var(--silver));
+    color: var(--primary-color);
+    box-shadow: 
+        0 8px 16px var(--shadow-color),
+        inset 0 0 30px rgba(255,255,255,0.8);
+}
+
+.back-button .arrow {
+    font-size: 1.2rem;
+}
+
+.item-list {
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    align-items: center;
+}
+
+.hidden {
+    display: none;
+}
+
+/* 增強動畫效果 */
+.fade-in {
+    opacity: 0;
+    animation: fadeIn 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
     }
-};
-
-let currentYear = null;
-let currentGroup = null;
-
-// 初始化頁面
-function init() {
-    showHomePage();
-    updateBreadcrumb();
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
-// 添加顯示首頁函數
-function showHomePage() {
-    hideElement('yearList');
-    hideElement('groupList');
-    hideElement('pdfList');
-    document.getElementById('homePage').classList.remove('hidden');
-    currentYear = null;
-    currentGroup = null;
+@keyframes titleFloat {
+    0% { 
+        transform: translateY(0) rotate(0deg); 
+        text-shadow: 
+            3px 3px 6px rgba(0,0,0,0.3),
+            -1px -1px 0 var(--white),
+            2px 2px 0 var(--silver-dark),
+            4px 4px 0 rgba(0,0,0,0.1);
+    }
+    25% { 
+        transform: translateY(-10px) rotate(1deg); 
+        text-shadow: 
+            4px 4px 8px rgba(0,0,0,0.4),
+            -1px -1px 0 var(--white),
+            3px 3px 0 var(--silver-dark),
+            5px 5px 0 rgba(0,0,0,0.15);
+    }
+    75% { 
+        transform: translateY(5px) rotate(-1deg); 
+        text-shadow: 
+            2px 2px 4px rgba(0,0,0,0.2),
+            -1px -1px 0 var(--white),
+            1px 1px 0 var(--silver-dark),
+            3px 3px 0 rgba(0,0,0,0.05);
+    }
+    100% { 
+        transform: translateY(0) rotate(0deg); 
+        text-shadow: 
+            3px 3px 6px rgba(0,0,0,0.3),
+            -1px -1px 0 var(--white),
+            2px 2px 0 var(--silver-dark),
+            4px 4px 0 rgba(0,0,0,0.1);
+    }
 }
 
-// 顯示年份列表
-function showYearList() {
-    document.getElementById('homePage').classList.add('hidden');
-    const yearList = document.getElementById('yearList');
-    yearList.innerHTML = `
-        <button class="back-button" onclick="showHomePage()">
-            <span class="arrow">←</span> 返回首頁
-        </button>
-        <h2>年份選擇</h2>
-        <div class="item-list">
-            ${data.years.map(year => `
-                <div class="item" onclick="selectYear('${year}')">
-                    <span>${year}年</span>
-                </div>
-            `).join('')}
-        </div>
-    `;
-    
-    hideElement('groupList');
-    hideElement('pdfList');
-    yearList.classList.remove('hidden');
-    
-    currentYear = null;
-    currentGroup = null;
-    updateBreadcrumb();
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(40px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
-// 選擇年份
-function selectYear(year) {
-    currentYear = year;
-    showGroupList();
-    updateBreadcrumb();
+/* 麵包屑導航 */
+#breadcrumb {
+    width: 100%;
+    max-width: 900px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto 2rem auto;
+    padding: 1rem;
+    background: linear-gradient(90deg, rgba(255,255,255,0.9), rgba(245,245,245,0.9));
+    border-radius: 8px;
+    box-shadow: 0 2px 4px var(--shadow-color);
+    animation: slideIn 0.5s ease;
 }
 
-// 顯示組別列表
-function showGroupList() {
-    const groupList = document.getElementById('groupList');
-    // 判斷是否為109年，決定要顯示的組別
-    const groupsToShow = data.specialGroups[currentYear] || data.groups;
-    
-    groupList.innerHTML = `
-        <button class="back-button" onclick="showYearList()">
-            <span class="arrow">←</span> 返回年份選擇
-        </button>
-        <h2>${currentYear}年度組別</h2>
-        <div class="item-list">
-            ${groupsToShow.map(group => `
-                <div class="item" onclick="selectGroup('${group}')">
-                    <span>${group}</span>
-                </div>
-            `).join('')}
-        </div>
-    `;
-    
-    hideElement('yearList');
-    hideElement('pdfList');
-    groupList.classList.remove('hidden');
+#breadcrumb a {
+    color: var(--secondary-color);
+    text-decoration: none;
+    transition: all 0.3s ease;
+    padding: 0.3rem 0.6rem;
+    border-radius: 4px;
 }
 
-// 選擇組別
-function selectGroup(group) {
-    currentGroup = group;
-    showPdfList();
-    updateBreadcrumb();
+#breadcrumb a:hover {
+    color: var(--primary-color);
+    background: rgba(0,0,0,0.05);
 }
 
-// 顯示 PDF 列表
-function showPdfList() {
-    const pdfList = document.getElementById('pdfList');
-    const pdfUrl = data.pdfs[currentYear][currentGroup];  // 現在直接獲取 URL
-    
-    pdfList.innerHTML = `
-        <button class="back-button" onclick="showGroupList()">
-            <span class="arrow">←</span> 返回組別選擇
-        </button>
-        <h2>${currentYear}年 ${currentGroup}</h2>
-        <div class="item-list">
-            <div class="item" onclick="openPdf('${pdfUrl}')">
-                <div class="pdf-icon">📄</div>
-                <div class="pdf-title">朗讀稿</div>
-            </div>
-        </div>
-    `;
-    
-    hideElement('yearList');
-    hideElement('groupList');
-    pdfList.classList.remove('hidden');
+@keyframes slideIn {
+    from {
+        transform: translateX(-20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
 }
 
-// 修改麵包屑導航
-function updateBreadcrumb() {
-    const breadcrumb = document.getElementById('breadcrumb');
-    
-    if (currentYear) {
-        html += ` > <a href="#" onclick="showYearList()">${currentYear}年</a>`;
+/* 新增動畫效果 */
+@keyframes iconPulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
+@keyframes slideInFromTop {
+    from {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes shimmer {
+    0% { background-position: -200% center; }
+    100% { background-position: 200% center; }
+}
+
+/* 響應式設計優化 */
+@media (max-width: 768px) {
+    .container {
+        padding: 1rem;
     }
     
-    if (currentGroup) {
-        html += ` > <a href="#" onclick="showGroupList()">${currentGroup}</a>`;
+    h1 {
+        font-size: 2.5rem;
     }
     
-    breadcrumb.innerHTML = html;
+    h2 {
+        font-size: 1.8rem;
+    }
+    
+    .item {
+        padding: 1.5rem;
+    }
+    
+    .back-button {
+        padding: 0.8rem 1.5rem;
+    }
+    
+    .item-list {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 1rem;
+    }
 }
 
-// 隱藏元素
-function hideElement(id) {
-    document.getElementById(id).classList.add('hidden');
+.item span {
+    font-size: 1.3rem;
+    font-weight: 600;
 }
 
-// 開啟 PDF
-function openPdf(url) {
-    window.open(url, '_blank');
+/* 首頁說明區域樣式 */
+.description-box {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto 2rem auto;
+    padding: 2rem;
+    background: linear-gradient(145deg, var(--white), var(--silver-light));
+    border-radius: 15px;
+    box-shadow: 
+        0 4px 8px var(--shadow-color),
+        inset 0 0 20px rgba(255,255,255,0.5);
+    border: 1px solid rgba(255,255,255,0.8);
+    text-align: cen;
+    min-height: 200px; /* 可根據需要調整 */
 }
 
-// 頁面載入時初始化
-document.addEventListener('DOMContentLoaded', init); 
+.description-content {
+    color: var(--secondary-color);
+    line-height: 1.6;
+    font-size: 1.1rem;
+}
+
+/* 開始瀏覽按鈕樣式 */
+.start-button {
+    background: linear-gradient(145deg, var(--white), var(--silver-light));
+    border: none;
+    padding: 1.2rem 2.5rem;
+    border-radius: 12px;
+    cursor: pointer;
+    font-size: 1.3rem;
+    color: var(--primary-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 
+        0 4px 8px var(--shadow-color),
+        inset 0 0 20px rgba(255,255,255,0.5);
+    border: 1px solid rgba(255,255,255,0.8);
+    margin: 2rem auto;
+    position: relative;
+    overflow: hidden;
+}
+
+.start-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        120deg,
+        transparent,
+        rgba(255,255,255,0.3),
+        transparent
+    );
+    transition: 0.5s;
+}
+
+.start-button:hover::before {
+    left: 50%;
+}
+
+.start-button:hover {
+    transform: translateY(-5px) scale(1.02);
+    background: linear-gradient(145deg, var(--silver-light), var(--silver));
+    box-shadow: 
+        0 8px 16px var(--shadow-color),
+        inset 0 0 30px rgba(255,255,255,0.8);
+}
+
+.button-text {
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+
+.button-icon {
+    font-size: 1.4rem;
+    transition: transform 0.3s ease;
+}
+
+.start-button:hover .button-icon {
+    transform: translateX(5px);
+}
+
+/* 確保 header 置中 */
+header {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 2rem;
+} 
